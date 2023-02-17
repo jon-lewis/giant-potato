@@ -1,10 +1,10 @@
-import * as React from 'react';
-import { getGreeting, setGreeting } from '../contracts/greeting-contract';
+import * as React from "react";
+import { getGreeting, setGreeting } from "../contracts/greeting-contract";
 
-import EducationalText from './EducationalText';
-import SignInPrompt from './SignInPrompt';
-import SignOutButton from './SignOutButton';
-import { useWalletSelector } from './WalletSelectorContext';
+import EducationalText from "./EducationalText";
+import SignInPrompt from "./SignInPrompt";
+import SignOutButton from "./SignOutButton";
+import { useWalletSelector } from "./WalletSelectorContext";
 
 type Props = {
   contractName: string;
@@ -12,7 +12,7 @@ type Props = {
 
 const ContractView = ({ contractName }: Props) => {
   const { selector, modal, accountId } = useWalletSelector();
-  const [valueFromBlockchain, setValueFromBlockchain] = React.useState('');
+  const [valueFromBlockchain, setValueFromBlockchain] = React.useState("");
   const [uiPleaseWait, setUiPleaseWait] = React.useState(true);
 
   const isSignedIn = accountId !== null;
@@ -23,7 +23,7 @@ const ContractView = ({ contractName }: Props) => {
     try {
       await wallet.signOut();
     } catch (err) {
-      console.log('Failed to sign out');
+      console.log("Failed to sign out");
       console.error(err);
     }
   };
@@ -58,7 +58,12 @@ const ContractView = ({ contractName }: Props) => {
   };
 
   if (!isSignedIn) {
-    return <SignInPrompt greeting={valueFromBlockchain} onClick={() => modal?.show()} />;
+    return (
+      <SignInPrompt
+        greeting={valueFromBlockchain}
+        onClick={() => modal?.show()}
+      />
+    );
   }
 
   return (
@@ -69,16 +74,23 @@ const ContractView = ({ contractName }: Props) => {
             {accountId ? (
               <div className="flex align-center justify-between gap-6">
                 <p>
-                  Hello <span className="font-medium">{accountId}</span>
+                  Hello{" "}
+                  <span className="font-medium">
+                    {accountId} from Giant Potato
+                  </span>
                 </p>
                 <SignOutButton onClick={handleSignOut} />
               </div>
             ) : null}
             <h1 className="font-medium">
-              The contract says: <span className="font-normal">{valueFromBlockchain}</span>
+              The contract says:{" "}
+              <span className="font-normal">{valueFromBlockchain}</span>
             </h1>
             <form onSubmit={changeGreeting} className="change">
-              <label htmlFor="contrast-example" className="block text-sm font-medium text-slate-700 mb-4">
+              <label
+                htmlFor="contrast-example"
+                className="block text-sm font-medium text-slate-700 mb-4"
+              >
                 Change greeting:
               </label>
 
